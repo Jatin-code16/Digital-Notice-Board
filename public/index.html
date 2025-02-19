@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Notice Board</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Digital Notice Board</h1>
+    <!-- Toggle button to switch between student and admin modes -->
+    <button id="adminToggle" onclick="toggleAdminMode()">Switch to Admin Mode</button>
+  </header>
+
+  <!-- Filter Section -->
+  <section id="filterSection">
+    <label for="categoryFilter">Filter by Category:</label>
+    <select id="categoryFilter" onchange="fetchAnnouncements()">
+      <option value="">All</option>
+      <option value="Academics">Academics</option>
+      <option value="Clubs">Clubs</option>
+      <option value="Placements">Placements</option>
+      <option value="General">General</option>
+    </select>
+  </section>
+
+  <!-- Announcements Display Section -->
+  <section id="announcementsSection">
+    <div id="announcements"></div>
+  </section>
+
+  <!-- Hidden Admin Form Section -->
+  <section id="adminFormSection" class="hidden">
+    <h2>Post an Announcement</h2>
+    <form id="announcementForm" onsubmit="postAnnouncement(event)">
+      <input type="text" id="title" placeholder="Title" required />
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option value="Academics">Academics</option>
+        <option value="Clubs">Clubs</option>
+        <option value="Placements">Placements</option>
+        <option value="General">General</option>
+      </select>
+      <textarea id="content" placeholder="Announcement content" required></textarea>
+      <!-- New Sender Field -->
+      <input type="text" id="sender" placeholder="Sender (e.g., HOD, Exam Committee)" required />
+      <button type="submit">Post Announcement</button>
+    </form>
+    <div id="message"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

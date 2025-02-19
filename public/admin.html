@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Post Announcement</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Post an Announcement</h1>
+  
+  <form id="announcementForm" onsubmit="postAnnouncement(event)">
+    <input type="text" id="title" placeholder="Title" required /><br />
+    <select id="category" required>
+      <option value="">Select Category</option>
+      <option value="Academics">Academics</option>
+      <option value="Clubs">Clubs</option>
+      <option value="Placements">Placements</option>
+      <option value="General">General</option>
+    </select><br />
+    <textarea id="content" placeholder="Announcement content" required></textarea><br />
+    <button type="submit">Post Announcement</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+    async function postAnnouncement(event) {
+      event.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const category = document.getElementById('category').value;
+      const content = document.getElementById('content').value.trim();
+      if (!title || !category || !content) {
+        alert('Please fill in all fields.');
+        return;
+      }
+      try {
+        const response = await fetch('/announce', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, category, content })
+        });
+        const result = await response.json();
+        document.getElementById('message').innerText = result.message;
+        document.getElementById('announcementForm').reset();
+      } catch (error) {
+        console.error('Error posting announcement:', error);
+      }
+    }
+  </script>
+</body>
+</html>
