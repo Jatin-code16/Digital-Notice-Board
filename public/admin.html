@@ -5,46 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin - Post Announcement</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .admin-container {
+      max-width: 700px;
+      width: 100%;
+      margin: 20px;
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .admin-container h1 {
+      color: #667eea;
+      font-size: 2em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .admin-container h1::before {
+      content: '✏️ ';
+    }
+  </style>
 </head>
 <body>
-  <h1>Post an Announcement</h1>
-  
-  <form id="announcementForm" onsubmit="postAnnouncement(event)">
-    <input type="text" id="title" placeholder="Title" required /><br />
-    <select id="category" required>
-      <option value="">Select Category</option>
-      <option value="Academics">Academics</option>
-      <option value="Clubs">Clubs</option>
-      <option value="Placements">Placements</option>
-      <option value="General">General</option>
-    </select><br />
-    <textarea id="content" placeholder="Announcement content" required></textarea><br />
-    <button type="submit">Post Announcement</button>
-  </form>
+  <div class="admin-container">
+    <h1>Post an Announcement</h1>
+    
+    <form id="announcementForm" onsubmit="postAnnouncement(event)">
+      <input type="text" id="title" placeholder="Announcement Title" required />
+      
+      <select id="category" required>
+        <option value="">Select Category</option>
+        <option value="Academics">📚 Academics</option>
+        <option value="Clubs">🎭 Clubs</option>
+        <option value="Placements">💼 Placements</option>
+        <option value="General">📋 General</option>
+      </select>
+      
+      <textarea id="content" placeholder="Write your announcement here..." required></textarea>
+      
+      <input type="text" id="sender" placeholder="Sender (e.g., HOD, Exam Committee)" required />
+      
+      <button type="submit">Post Announcement</button>
+    </form>
 
-  <div id="message"></div>
+    <div id="message"></div>
+  </div>
 
   <script>
     async function postAnnouncement(event) {
       event.preventDefault();
+      
       const title = document.getElementById('title').value.trim();
       const category = document.getElementById('category').value;
       const content = document.getElementById('content').value.trim();
-      if (!title || !category || !content) {
+      const sender = document.getElementById('sender').value.trim();
+      
+      if (!title || !category || !content || !sender) {
         alert('Please fill in all fields.');
         return;
       }
+      
       try {
         const response = await fetch('/announce', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, category, content })
+          body: JSON.stringify({ title, category, content, sender })
         });
         const result = await response.json();
-        document.getElementById('message').innerText = result.message;
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerText = result.message;
+        messageDiv.style.display = 'block';
         document.getElementById('announcementForm').reset();
       } catch (error) {
         console.error('Error posting announcement:', error);
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerText = 'Error posting announcement. Please try again.';
+        messageDiv.style.background = '#ffebee';
+        messageDiv.style.color = '#c62828';
       }
     }
   </script>

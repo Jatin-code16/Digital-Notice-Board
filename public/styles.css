@@ -1,73 +1,303 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 25px 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  color: #667eea;
+  font-size: 2.2em;
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+#adminToggle {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+#adminToggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+#filterSection {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+#filterSection label {
+  color: white;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-right: 15px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#categoryFilter {
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: none;
+  background: white;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+#categoryFilter:focus {
+  outline: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#announcementsSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#announcements h2 {
+  color: white;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.announcement {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: 25px;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+  border-left: 5px solid #667eea;
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+}
+
+.announcement:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.announcement h3 {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.announcement p {
+  color: #555;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.announcement p strong {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.announcement .timestamp {
+  font-size: 0.85em;
+  color: #999;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.high-priority {
+  border-left: 5px solid #ff4757;
+  background: linear-gradient(135deg, #fff 0%, #ffe6e6 100%);
+  animation: pulse 2s infinite;
+}
+
+.high-priority::before {
+  background: #ff4757;
+}
+
+.high-priority::after {
+  content: '⚠️ HIGH PRIORITY';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #ff4757;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(255, 71, 87, 0.2); }
+  50% { box-shadow: 0 8px 30px rgba(255, 71, 87, 0.4); }
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.category-Academics { background: #e3f2fd; color: #1976d2; }
+.category-Clubs { background: #f3e5f5; color: #7b1fa2; }
+.category-Placements { background: #e8f5e9; color: #388e3c; }
+.category-General { background: #fff3e0; color: #f57c00; }
+
+.hidden {
+  display: none;
+}
+
+#adminFormSection {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+#adminFormSection h2 {
+  color: #667eea;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 14px 18px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  font-size: 1em;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+button[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#message {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.priority-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: 600;
+  background: #f5f5f5;
+  color: #666;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: white;
+}
+
+.empty-state p {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.6em;
   }
-  
-  header {
-    background: #0066cc;
-    color: #fff;
-    padding: 15px 20px;
-    text-align: center;
-  }
-  
-  #filterSection {
-    margin: 20px;
-    text-align: center;
-  }
-  
-  #announcementsSection {
-    margin: 20px;
-  }
-  
+
   .announcement {
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 15px;
-    margin: 10px;
-    transition: transform 0.2s;
+    padding: 20px;
   }
-  
-  .announcement:hover {
-    transform: scale(1.02);
+
+  #adminFormSection {
+    margin: 20px;
+    padding: 25px;
   }
-  
-  .announcement h3 {
-    margin-top: 0;
-    color: #0066cc;
-  }
-  
-  .timestamp {
-    font-size: 0.8em;
-    color: #666;
-  }
-  
-  .high-priority {
-    border: 2px solid red;
-    background-color: #ffe6e6;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  input, select, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    background: #0066cc;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background: #005bb5;
-  }
-  
+}
